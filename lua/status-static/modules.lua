@@ -1,11 +1,11 @@
 -- aplicar el thema
 require('theme-nvim').load_highlight('statusline')
+
 local colors = require('theme-nvim.palletes.frappe')
+local icons = require('theme-nvim.icons')
 
 local fileInfo = require('status-static.file_info')
-local fn = vim.fn
-
-local hig_separate = '%#St_separate_center#' .. '|'
+local hig_separate = '%#St_separate_center#' .. icons.separators.line.favorite
 
 local modes = {
 	['n'] = { 'NORMAL', 'St_NormalMode' },
@@ -61,9 +61,9 @@ M.file_size = function()
 end
 
 M.fileName = function()
-	local icon = '  '
-	local icon_color = '#A6D189'
-	local filename = (fn.expand('%') == '' and 'Empty ') or fn.expand('%:t')
+	local icon = ' ' .. icons.lspkind.File
+	local icon_color = colors.green
+	local filename = (vim.fn.expand('%') == '' and 'Empty ') or vim.fn.expand('%:t')
 	local file_ext = vim.fn.expand('%:e')
 
 	if filename ~= 'Empty ' then
@@ -90,19 +90,25 @@ M.git = function()
 	local m = vim.api.nvim_get_mode().mode
 
 	if not vim.b.gitsigns_head or vim.b.gitsigns_git_status then
-		local icon_linux = '%#' .. modes[m][2] .. '#  '
+		local icon_linux = '%#St_IconLinux#' .. icons.others.so.fedora .. ' '
 		local name_sistem = '%#St_Sistem#Linux '
 		return icon_linux .. name_sistem .. hig_separate
 	end
 
 	local git_status = vim.b.gitsigns_status_dict
+	local i_add = ' ' .. icons.git.add .. ' ' .. git_status.added
+	local i_change = ' ' .. icons.git.modifier .. ' ' .. git_status.changed
+	local i_remove = ' ' .. icons.git.remove .. ' ' .. git_status.removed
 
-	local added = (git_status.added and git_status.added ~= 0) and ('  ' .. git_status.added) or ''
-	local changed = (git_status.changed and git_status.changed ~= 0) and ('  ' .. git_status.changed) or ''
-	local removed = (git_status.removed and git_status.removed ~= 0) and ('  ' .. git_status.removed) or ''
+	local added = (git_status.added and git_status.added ~= 0) and i_add or ''
+	local changed = (git_status.changed and git_status.changed ~= 0) and i_change or ''
+	local removed = (git_status.removed and git_status.removed ~= 0) and i_remove or ''
 
-	local arrow_left = '%#St_ArrowLeftGit#' .. ''
-	local arrow_right = '%#St_ArrowRightGit#' .. ' '
+	local arrow_left = '%#St_ArrowLeftGit#' .. icons.separators.arrow.caret_right .. icons.separators.arrow.chervon_right
+	local arrow_right = '%#St_ArrowRightGit#'
+		.. ' '
+		.. icons.separators.arrow.chevron_left
+		.. icons.separators.arrow.caret_left
 	local hig_add = '%#Git_Add#' .. added
 	local hig_change = '%#Git_Changed#' .. changed
 	local hig_remove = '%#Git_removed#' .. removed
@@ -154,13 +160,21 @@ M.LSP_Diagnostics = function()
 	local hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
 	local info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
 
-	errors = (errors and errors > 0) and ('%#St_lspError#' .. ' ' .. errors .. ' ') or ''
-	warnings = (warnings and warnings > 0) and ('%#St_lspWarning#' .. '  ' .. warnings .. ' ') or ''
-	hints = (hints and hints > 0) and ('%#St_lspHints#' .. ' ' .. hints .. ' ') or ''
-	info = (info and info > 0) and ('%#St_lspInfo#' .. ' ' .. info .. ' ') or ''
+	local i_error = '%#St_lspError#' .. icons.diagnostic.error .. ' ' .. errors .. ' '
+	local i_warn = '%#St_lspWarning#' .. icons.diagnostic.warning .. ' ' .. warnings .. ' '
+	local i_hint = '%#St_lspHints#' .. icons.diagnostic.hint .. ' ' .. hints .. ' '
+	local i_info = '%#St_lspInfo#' .. icons.diagnostic.info .. ' ' .. info .. ' '
 
-	local arrow_left = '%#St_ArrowLeftLsp#' .. ' '
-	local arrow_right = '%#St_ArrowRightLsp#' .. ''
+	errors = (errors and errors > 0) and i_error or ''
+	warnings = (warnings and warnings > 0) and i_warn or ''
+	hints = (hints and hints > 0) and i_hint or ''
+	info = (info and info > 0) and i_info or ''
+
+	local arrow_left = '%#St_ArrowLeftLsp#'
+		.. icons.separators.arrow.caret_right
+		.. icons.separators.arrow.chervon_right
+		.. ' '
+	local arrow_right = '%#St_ArrowRightLsp#' .. icons.separators.arrow.chevron_left .. icons.separators.arrow.caret_left
 	if #vim.diagnostic.get(0) == 0 then
 		arrow_left = ''
 		arrow_right = ''
@@ -174,14 +188,13 @@ M.LSP_status = function()
 end
 
 M.cwd = function()
-	local dir_icon = '%#St_cwd_icon#' .. '  '
-	local dir_name = '%#St_cwd_text#' .. fn.fnamemodify(fn.getcwd(), ':t') .. ' '
+	local dir_icon = '%#St_cwd_icon#' .. ' ' .. icons.lspkind.Folder
+	local dir_name = '%#St_cwd_text#' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
 
 	return (vim.o.columns > 85 and (dir_icon .. dir_name .. hig_separate)) or ''
 end
 
 M.cursor_position = function()
-	local m = vim.api.nvim_get_mode().mode
 	local line = vim.fn.line('.')
 	local column = vim.fn.col('.')
 
