@@ -96,13 +96,13 @@ M.git = function()
 	end
 
 	local git_status = vim.b.gitsigns_status_dict
-	local i_add = ' ' .. icons.git.add .. ' ' .. git_status.added
-	local i_change = ' ' .. icons.git.modifier .. ' ' .. git_status.changed
-	local i_remove = ' ' .. icons.git.remove .. ' ' .. git_status.removed
+	local i_add = ' ' .. icons.git.add .. ' '
+	local i_change = ' ' .. icons.git.modifier .. ' '
+	local i_remove = ' ' .. icons.git.remove .. ' '
 
-	local added = (git_status.added and git_status.added ~= 0) and i_add or ''
-	local changed = (git_status.changed and git_status.changed ~= 0) and i_change or ''
-	local removed = (git_status.removed and git_status.removed ~= 0) and i_remove or ''
+	local added = (git_status.added and git_status.added ~= 0) and (i_add .. git_status.added) or ''
+	local changed = (git_status.changed and git_status.changed ~= 0) and (i_change .. git_status.changed) or ''
+	local removed = (git_status.removed and git_status.removed ~= 0) and (i_remove .. git_status.removed) or ''
 
 	local arrow_left = '%#St_ArrowLeftGit#' .. icons.separators.arrow.caret_right .. icons.separators.arrow.chervon_right
 	local arrow_right = '%#St_ArrowRightGit#'
@@ -160,15 +160,15 @@ M.LSP_Diagnostics = function()
 	local hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
 	local info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
 
-	local i_error = '%#St_lspError#' .. icons.diagnostic.error .. ' ' .. errors .. ' '
-	local i_warn = '%#St_lspWarning#' .. icons.diagnostic.warning .. ' ' .. warnings .. ' '
-	local i_hint = '%#St_lspHints#' .. icons.diagnostic.hint .. ' ' .. hints .. ' '
-	local i_info = '%#St_lspInfo#' .. icons.diagnostic.info .. ' ' .. info .. ' '
+	local i_error = '%#St_lspError#' .. icons.diagnostic.error .. ' '
+	local i_warn = '%#St_lspWarning#' .. icons.diagnostic.warning .. ' '
+	local i_hint = '%#St_lspHints#' .. icons.diagnostic.hint .. ' '
+	local i_info = '%#St_lspInfo#' .. icons.diagnostic.info .. ' '
 
-	errors = (errors and errors > 0) and i_error or ''
-	warnings = (warnings and warnings > 0) and i_warn or ''
-	hints = (hints and hints > 0) and i_hint or ''
-	info = (info and info > 0) and i_info or ''
+	errors = (errors and errors > 0) and (i_error .. errors .. ' ') or ''
+	warnings = (warnings and warnings > 0) and (i_warn .. warnings .. ' ') or ''
+	hints = (hints and hints > 0) and (i_hint .. hints .. ' ') or ''
+	info = (info and info > 0) and (i_info .. info .. ' ') or ''
 
 	local arrow_left = '%#St_ArrowLeftLsp#'
 		.. icons.separators.arrow.caret_right
