@@ -1,5 +1,5 @@
 -- aplicar el thema
-require('theme-nvim').load_highlight('statusline')
+require('theme-nvim').load_highlight('statusStatic')
 
 local colors = require('theme-nvim.palletes.frappe')
 local icons = require('theme-nvim.icons')
