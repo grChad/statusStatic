@@ -74,6 +74,9 @@ local git_groups = {
 for _, new_group in ipairs(git_groups) do
 	local hl = vim.api.nvim_get_hl_by_name(new_group.hl, true)
 	hl.bg = cp.base
+	hl.italic = false
+	hl.bold = false
+	hl.underline = false
 
 	vim.api.nvim_set_hl(0, new_group.name, hl)
 end
