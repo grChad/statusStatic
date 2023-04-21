@@ -5,7 +5,6 @@ function M.run()
 
 	return table.concat {
 		modules.mode(),
-		modules.file_size(),
 		modules.fileName(),
 		modules.LSP_status() or '',
 		modules.LSP_Diagnostics(),
@@ -15,8 +14,9 @@ function M.run()
 		'%=',
 
 		modules.git(),
+		modules.user(),
 		modules.cwd(),
-		modules.cursor_position(),
+		-- modules.cursor_position(),
 	}
 end
 

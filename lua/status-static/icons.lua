@@ -1,0 +1,32 @@
+return {
+	separate = '|',
+	file = '',
+	folder = ' ',
+	caret_left = '  ',
+	caret_right = ' ',
+	lsp = '   ',
+	git = {
+		icon_branch = ' ',
+		icon_copilot = ' ',
+		add = ' ',
+		remove = ' ',
+		modifier = ' ',
+	},
+	diagnostic = {
+		error = ' ',
+		hint = ' ',
+		info = ' ',
+		warning = ' ',
+	},
+	os = {
+		fedora = ' ',
+		debian = ' ',
+		arch = ' ',
+		ubuntu = ' ',
+		manjaro = ' ',
+		linuxmint = ' ',
+		pop = ' ',
+		zorin = ' ',
+		linux = ' ',
+	},
+}

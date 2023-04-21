@@ -1,4 +1,29 @@
+local icons = require('status-static.icons')
+
 local M = {}
+
+function M.getNameUser()
+	local user = os.getenv('USER') -- obtener el usuario del sistema
+
+	if user ~= nil then
+		return string.gsub(user, '^%l', string.upper)
+	end
+
+	return 'Linux'
+end
+
+function M.getSystemName()
+	local file = io.open('/etc/os-release', 'r')
+	if not file then
+		return nil
+	end
+
+	local content = file:read('*all')
+	file:close()
+
+	local nameId = content and content:match('ID=(%w+)')
+	return nameId
+end
 
 -- Función que formatea el tamaño actual del archivo
 function M.format_file_size(file)
@@ -24,26 +49,15 @@ function M.format_file_size(file)
 
 	-- si el decimal termina en '.0' como en '345.0' devolvera '345'
 	if size_float:sub(-2) == '.0' then
-		return string.format('%d%s ', size, suffixes[i])
+		return ' ' .. string.format('%d%s ', size, suffixes[i])
 	end
 
-	return size_float .. suffixes[i] .. ' '
-end
-
-function M.get_file_size()
-	-- optiene la ruta del archivo que se esta editando, ejemplo:
-	-- `/home/user/my_file.txt`
-	local file = vim.fn.expand('%:p')
-	if #file == 0 then
-		return ''
-	end
-
-	return M.format_file_size(file)
+	return ' ' .. size_float .. suffixes[i] .. ' '
 end
 
 function M.get_lsp_clien(msg)
-	local hig_separate = '%#St_separate_lsp#' .. '|'
-	local icon_lsp = '%#St_IconLsp#' .. '   '
+	local hig_separate = '%#St_separate#' .. icons.separate
+	local icon_lsp = '%#St_IconLsp#' .. icons.lsp
 	-- Obtenemos el tipo de archivo del buffer actual
 	local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
 	-- Con el paquete 'vim.lsp' listamos todos los clientes LSP activos en Nvim
@@ -66,7 +80,7 @@ function M.get_lsp_clien(msg)
 	end
 
 	local hig_lsps = '%#St_LspServers#' .. table.concat(lsps, ', ')
-	if vim.o.columns > 105 then
+	if vim.o.columns > 125 then
 		return hig_separate .. icon_lsp .. hig_lsps .. ' '
 	end
 
