@@ -167,24 +167,21 @@ M.git = function()
 	local i_remove = icons.git.remove
 	local i_change = icons.git.modifier
 
-	local parts = {}
-	if git_status.added and git_status.added ~= 0 then
-		table.insert(parts, '%#Git_Add#' .. i_add .. git_status.added)
-	end
-	if git_status.changed and git_status.changed ~= 0 then
-		table.insert(parts, '%#Git_Change#' .. i_change .. git_status.changed)
-	end
-	if git_status.removed and git_status.removed ~= 0 then
-		table.insert(parts, '%#Git_Delete#' .. i_remove .. git_status.removed)
-	end
-
-	if #parts == 0 then
-		return ''
-	end
+	local added = (git_status.added and git_status.added ~= 0) and (i_add .. git_status.added) or ''
+	local changed = (git_status.changed and git_status.changed ~= 0) and (i_change .. git_status.changed) or ''
+	local removed = (git_status.removed and git_status.removed ~= 0) and (i_remove .. git_status.removed) or ''
 
 	local arrow_right = '%#St_gitIcons#' .. icons.caret_left
-	local diagnistic_git = table.concat(parts, ' ') .. arrow_right
 
+	local hig_add = '%#Git_Add#' .. added
+	local hig_delete = '%#Git_Delete#' .. removed
+	local hig_change = '%#Git_Change#' .. changed
+
+	if added == '' and changed == '' and removed == '' then
+		arrow_right = ''
+	end
+
+	local diagnistic_git = hig_add .. hig_change .. hig_delete .. arrow_right
 	local branch_name = '%#St_gitIcons#' .. icons.git.icon_branch .. '%#St_GitNameBranch#' .. git_status.head .. ' '
 	if vim.o.columns < 85 then
 		branch_name = '%#St_gitIcons#' .. icons.git.icon_branch
