@@ -8,9 +8,9 @@ return {
 	git = {
 		icon_branch = ' ',
 		icon_copilot = ' ',
-		add = ' ',
-		remove = ' ',
-		modifier = ' ',
+		add = '  ',
+		remove = '  ',
+		modifier = '  ',
 	},
 	diagnostic = {
 		error = ' ',
