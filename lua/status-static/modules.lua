@@ -44,6 +44,7 @@ local os_icons = {
 	['linuxmint'] = '%#St_IconLinuxMint# ' .. icons.os.linuxmint,
 	['pop'] = '%#St_IconPop# ' .. icons.os.pop,
 	['zorin'] = '%#St_IconZorin# ' .. icons.os.zorin,
+	['cereus'] = '%#St_IconCereus# ' .. icons.os.cereus,
 
 	-- icono por defecto para sistemas operativos no reconocidos
 	['default'] = '%#St_IconLinux# ' .. icons.os.linux,

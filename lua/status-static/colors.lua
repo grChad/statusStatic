@@ -14,6 +14,7 @@ return {
 	linuxmint = '#69B63D',
 	pop = '#46B3C1',
 	zorin = '#14A1E8',
+	cereus = '#4e965c',
 
 	git = '#FB7D68',
 

@@ -28,5 +28,6 @@ return {
 		pop = ' ',
 		zorin = ' ',
 		linux = ' ',
+		cereus = '󰶵 ',
 	},
 }

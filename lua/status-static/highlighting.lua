@@ -41,6 +41,7 @@ local group = {
 	St_IconLinuxMint = { fg = cp.linuxmint, bg = cp.base },
 	St_IconPop = { fg = cp.pop, bg = cp.base },
 	St_IconZorin = { fg = cp.zorin, bg = cp.base },
+	St_IconCereus = { fg = cp.cereus, bg = cp.base },
 	St_IconLinux = { fg = cp.text2, bg = cp.base },
 
 	St_User = { fg = cp.text1, bg = cp.base },
