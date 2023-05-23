@@ -3,7 +3,7 @@ local M = {}
 function M.run()
 	local modules = require('status-static.modules')
 
-	return table.concat {
+	return table.concat({
 		modules.mode(),
 		modules.fileName(),
 		modules.LSP_status() or '',
@@ -16,8 +16,8 @@ function M.run()
 		modules.git(),
 		modules.user(),
 		modules.cwd(),
-		-- modules.cursor_position(),
-	}
+		modules.cursor_position(),
+	})
 end
 
 M.setup = function()

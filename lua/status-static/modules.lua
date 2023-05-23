@@ -203,7 +203,7 @@ end
 
 M.cwd = function()
 	local dir_icon = '%#St_cwd_icon# ' .. icons.folder
-	local dir_name = '%#St_cwd_text#' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
+	local dir_name = '%#St_cwd_text#' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' ' .. hig_separate
 
 	return dir_icon .. dir_name
 end
@@ -212,7 +212,7 @@ M.cursor_position = function()
 	local line = vim.fn.line('.')
 	local column = vim.fn.col('.')
 
-	return '%#St_Position#' .. string.format('%3d :%2d ', line, column)
+	return ' %#St_Position#' .. string.format('%3d :%2d ', line, column) .. ' '
 end
 
 return M
