@@ -51,7 +51,7 @@ local group = {
 	St_cwd_text = { fg = cp.text1, bg = cp.base, bold = true },
 
 	-- position
-	-- St_Position = { fg = cp.text1, bg = cp.base, bold = true },
+	St_Position = { fg = cp.text1, bg = cp.base, bold = true },
 }
 
 for hl, col in pairs(group) do
