@@ -209,10 +209,11 @@ M.cwd = function()
 end
 
 M.cursor_position = function()
-	local line = vim.fn.line('.')
+	-- local line = vim.fn.line('.')
 	local column = vim.fn.col('.')
 
-	return '%#St_Position#' .. string.format('%3d :%2d ', line, column)
+	-- return '%#St_Position#' .. string.format('%3d :%2d ', line, column)
+	return '%#St_Position# X: ' .. column .. ' '
 end
 
 return M
