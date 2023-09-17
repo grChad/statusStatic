@@ -10,7 +10,7 @@ return {
       icon_copilot = ' ',
       add = '  ',
       remove = '  ',
-      modifier = '   ',
+      modifier = '  ',
    },
    diagnostic = {
       error = ' ',
