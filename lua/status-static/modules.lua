@@ -1,7 +1,7 @@
-local icons = require('status-static.icons')
+local icons = require('i-nvim') -- plugin of icons
 local fileInfo = require('status-static.file_info')
 
-local hig_separate = '%#sS_separate#' .. icons.separate
+local hig_separate = '%#sS_separate#' .. icons.separators.line.H_Favorite
 
 local modes = {
    ['n'] = { 'NORMAL', 'sS_NormalMode' },
@@ -33,18 +33,18 @@ local modes = {
 }
 
 local os_icons = {
-   ['fedora'] = '%#sS_IconFedora# ' .. icons.os.fedora,
-   ['debian'] = '%#sS_IconDebian# ' .. icons.os.debian,
-   ['arch'] = '%#sS_IconArch# ' .. icons.os.arch,
-   ['ubuntu'] = '%#sS_IconUbuntu# ' .. icons.os.ubuntu,
-   ['manjaro'] = '%#sS_IconManjaro# ' .. icons.os.manjaro,
-   ['linuxmint'] = '%#sS_IconLinuxMint# ' .. icons.os.linuxmint,
-   ['pop'] = '%#sS_IconPop# ' .. icons.os.pop,
-   ['zorin'] = '%#sS_IconZorin# ' .. icons.os.zorin,
-   ['cereus'] = '%#sS_IconCereus# ' .. icons.os.cereus,
+   ['fedora'] = '%#sS_IconFedora# ' .. icons.others.os.fedora .. ' ',
+   ['debian'] = '%#sS_IconDebian# ' .. icons.others.os.debian .. ' ',
+   ['arch'] = '%#sS_IconArch# ' .. icons.others.os.arch .. ' ',
+   ['ubuntu'] = '%#sS_IconUbuntu# ' .. icons.others.os.ubuntu .. ' ',
+   ['manjaro'] = '%#sS_IconManjaro# ' .. icons.others.os.manjaro .. ' ',
+   ['linuxmint'] = '%#sS_IconLinuxMint# ' .. icons.others.os.mint .. ' ',
+   ['pop'] = '%#sS_IconPop# ' .. icons.others.os.pop_os .. ' ',
+   ['zorin'] = '%#sS_IconZorin# ' .. icons.others.os.zorin .. ' ',
+   ['cereus'] = '%#sS_IconCereus# ' .. icons.others.os.cereus .. ' ',
 
    -- icono por defecto para sistemas operativos no reconocidos
-   ['default'] = '%#sS_IconLinux# ' .. icons.os.linux,
+   ['default'] = '%#sS_IconLinux# ' .. icons.others.os.linux .. ' ',
 }
 
 local M = {}
@@ -60,7 +60,7 @@ end
 
 -- NOTE: file name and file size
 M.fileName = function()
-   local icon = icons.file
+   local icon = icons.others.mix.file
    local icon_color = '#A6D189'
    local filename = (vim.fn.expand('%') == '' and 'Empty ') or vim.fn.expand('%:t')
    local file_ext = vim.fn.expand('%:e')
@@ -95,7 +95,7 @@ end
 
 -- NOTE: Lsp
 M.LSP_status = function()
-   local icon_lsp = '%#sS_IconLsp#' .. icons.lsp
+   local icon_lsp = '%#sS_IconLsp# ' .. icons.others.mix.lsp .. '  '
    -- Obtenemos el tipo de archivo del buffer actual
    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
    -- Con el paquete 'vim.lsp' listamos todos los clientes LSP activos en Nvim
@@ -131,10 +131,10 @@ M.LSP_Diagnostics = function()
       return ''
    end
 
-   local i_error = '%#DiagnosticSignError#' .. icons.diagnostic.error
-   local i_warn = '%#DiagnosticSignWarn#' .. icons.diagnostic.warning
-   local i_hint = '%#DiagnosticSignInfo#' .. icons.diagnostic.hint
-   local i_info = '%#DiagnosticSignHint#' .. icons.diagnostic.info
+   local i_error = '%#DiagnosticSignError#' .. icons.diagnostic.error .. ' '
+   local i_warn = '%#DiagnosticSignWarn#' .. icons.diagnostic.warning .. ' '
+   local i_hint = '%#DiagnosticSignInfo#' .. icons.diagnostic.hint .. ' '
+   local i_info = '%#DiagnosticSignHint#' .. icons.diagnostic.info .. ' '
 
    local messages = {
       { severity = vim.diagnostic.severity.ERROR, hl = i_error },
@@ -143,7 +143,7 @@ M.LSP_Diagnostics = function()
       { severity = vim.diagnostic.severity.INFO,  hl = i_info },
    }
 
-   local arrow_left = '%#sS_IconLsp#' .. icons.caret_right
+   local caret_right = '%#sS_IconLsp#' .. icons.separators.arrow.caret_right .. ' '
    local message_str = ''
 
    for _, message in ipairs(messages) do
@@ -154,10 +154,10 @@ M.LSP_Diagnostics = function()
    end
 
    if #vim.diagnostic.get(0) == 0 then
-      arrow_left = ''
+      caret_right = ''
    end
 
-   return arrow_left .. message_str
+   return caret_right .. message_str
 end
 
 -- TODO: --------------[Status Center]----------------
@@ -192,28 +192,28 @@ M.git = function()
 
    local git_status = vim.b.gitsigns_status_dict
 
-   local i_add = icons.git.add
-   local i_remove = icons.git.remove
-   local i_change = icons.git.modifier
+   local i_add = ' ' .. icons.git.add .. ' '
+   local i_remove = ' ' .. icons.git.remove .. ' '
+   local i_change = ' ' .. icons.git.modifier .. ' '
 
    local added = (git_status.added and git_status.added ~= 0) and (i_add .. git_status.added) or ''
    local changed = (git_status.changed and git_status.changed ~= 0) and (i_change .. git_status.changed) or ''
    local removed = (git_status.removed and git_status.removed ~= 0) and (i_remove .. git_status.removed) or ''
 
-   local arrow_right = '%#sS_gitIcons#' .. icons.caret_left
+   local caret_left = '%#sS_gitIcons# ' .. icons.separators.arrow.caret_left .. ' '
 
    local hig_add = '%#GitSignsAdd#' .. added
    local hig_delete = '%#GitSignsDelete#' .. removed
    local hig_change = '%#GitSignsChange#' .. changed
 
    if added == '' and changed == '' and removed == '' then
-      arrow_right = ''
+      caret_left = ''
    end
 
-   local diagnistic_git = hig_add .. hig_change .. hig_delete .. arrow_right
-   local branch_name = '%#sS_gitIcons#' .. icons.git.icon_branch .. '%#sS_GitNameBranch#' .. git_status.head .. ' '
+   local diagnistic_git = hig_add .. hig_change .. hig_delete .. caret_left
+   local branch_name = '%#sS_gitIcons#' .. icons.git.branch .. ' %#sS_GitNameBranch#' .. git_status.head .. ' '
    if vim.o.columns < 85 then
-      branch_name = '%#sS_gitIcons#' .. icons.git.icon_branch
+      branch_name = '%#sS_gitIcons#' .. icons.git.branch .. ' '
    end
 
    return diagnistic_git .. branch_name .. hig_separate
@@ -232,7 +232,7 @@ end
 
 -- NOTE: cwd
 M.cwd = function()
-   local dir_icon = '%#sS_cwdIcon# ' .. icons.folder
+   local dir_icon = '%#sS_cwdIcon# ' .. icons.others.mix.directory .. ' '
    local dir_name = '%#sS_cwdText#' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' ' .. hig_separate
 
    return dir_icon .. dir_name
