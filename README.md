@@ -25,7 +25,7 @@ con [Packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
 use {
-    'gr92/statusStatic',
+    'grChad/statusStatic',
     config = function()
         require('status-static').setup()
     end,
