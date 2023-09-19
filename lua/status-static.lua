@@ -6,7 +6,7 @@ function M.run()
    return table.concat({
       modules.mode(),
       modules.fileName(),
-      modules.LSP_status() or '',
+      modules.LSP_status(),
       modules.LSP_Diagnostics(),
 
       '%=',

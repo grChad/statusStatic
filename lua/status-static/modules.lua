@@ -95,7 +95,35 @@ end
 
 -- NOTE: Lsp
 M.LSP_status = function()
-   return fileInfo.get_lsp_clien()
+   local icon_lsp = '%#sS_IconLsp#' .. icons.lsp
+   -- Obtenemos el tipo de archivo del buffer actual
+   local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+   -- Con el paquete 'vim.lsp' listamos todos los clientes LSP activos en Nvim
+   local clients = vim.lsp.get_active_clients()
+
+   if not clients or #clients == 0 then
+      return ''
+   end
+
+   local lsps = {}
+   for _, client in ipairs(clients) do
+      local filetypes = client.config.filetypes
+      if filetypes and vim.tbl_contains(filetypes, buf_ft) then
+         table.insert(lsps, client.name)
+      end
+   end
+
+   if #lsps == 0 then
+      return ''
+   end
+
+   local hig_lsps = '%#sS_LspServers#' .. table.concat(lsps, ', ')
+
+   if vim.o.columns > 125 then
+      return hig_separate .. icon_lsp .. hig_lsps .. ' '
+   end
+
+   return hig_separate .. icon_lsp
 end
 
 M.LSP_Diagnostics = function()
