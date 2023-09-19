@@ -32,6 +32,18 @@ use {
 }
 ```
 
+con [Lazy](https://github.com/folke/lazy.nvim)
+
+```lua
+{
+  'grChad/statusStatic',
+  lazy = false,
+  config = function()
+     require('status-static').setup()
+  end,
+},
+```
+
 ## Pendiente
 
 - [ ] Un tema claro.
