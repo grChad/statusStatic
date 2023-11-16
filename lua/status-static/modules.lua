@@ -174,6 +174,7 @@ M.LSP_progress = function()
 
    local msg = Lsp.message or ''
    local percentage = Lsp.percentage or 0
+   local mose = Lsp.message
    local title = Lsp.title or ''
    local spinners = { '', '' }
    local ms = vim.loop.hrtime() / 1000000

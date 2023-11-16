@@ -10,7 +10,7 @@ function M.run()
       modules.LSP_Diagnostics(),
 
       '%=',
-      modules.LSP_progress(),
+      -- modules.LSP_progress(),
       '%=',
 
       modules.git(),
